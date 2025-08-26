@@ -1,0 +1,89 @@
+<!DOCTYPE html> 
+<html> 
+<body style="background-color: black; color: red; text-align: center; font-family: Arial, sans-serif;">
+    <h1 id="Heading1" style="font-size: 50px; color: red;">Welcome to my Website!!</h1>
+    <p id="randomwords" style="font-size: 20px; color: red;">We need to verify that you are a human. Please click the button below to continue.</p>
+    <h1 id="Heading2" style="font-size: 50px; color: red; display: none;">YOU'VE BEEN RICKROLLED HAHAHAHAHAHAHA</h1>
+    <button id="myButton" style="color: red; background-color: white; border-style: solid; border-color: red; font-size: 25px" onclick="main()">Click Here To Verify</button><br>
+    <video id="myVideo">
+        <source src="rickroll2.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+    <br>
+    <script>
+        function speak (phrase) {
+  window.speechSynthesis.speak(new window.SpeechSynthesisUtterance(phrase));
+}
+        function speak1() {
+            speak("You have been rickrolled.");
+            speak("Never going to give you up never going to let you down.");
+        }
+
+        function showPopup() {
+            // Create the popup window
+            let popup = document.createElement("div");
+            popup.id = "popup";
+            popup.style.position = "absolute";
+            popup.style.width = "300px";
+            popup.style.height = "300px";
+            popup.style.backgroundColor = "black"; // Set the background color to white
+            popup.style.color = "red";
+            popup.style.border = "2px solid red";
+            popup.style.textAlign = "center";
+            popup.style.lineHeight = "100px";
+            popup.style.fontSize = "20px";
+            popup.innerText = " Mwahahaha! You've been Rick'd! ";
+            popup.innerHTML += "<br>";
+            popup.innerHTML += "<img src='youGotRickd.gif' alt='rickroll image'>";
+            document.body.appendChild(popup);
+
+            // Animate the popup to move around the screen
+            let x = 0, y = 0;
+            let dx = 5, dy = 5;
+            function movePopup() {
+                let screenWidth = window.innerWidth;
+                let screenHeight = window.innerHeight;
+
+                x += dx;
+                y += dy;
+
+                // Reverse direction if the popup hits the screen edges
+                if (x + 300 > screenWidth || x < 0) dx = -dx;
+                if (y + 300 > screenHeight || y < 0) dy = -dy;
+
+                popup.style.left = x + "px";
+                popup.style.top = y + "px";
+
+                requestAnimationFrame(movePopup);
+            }
+
+            movePopup();
+        }
+        function main() {
+            speak1();
+            doTheDirtyStuff();
+        }
+        function doTheDirtyStuff() {
+            let vid = document.getElementById("myVideo");
+            let button = document.getElementById("myButton"); // Get the button element
+            let heading = document.getElementById("Heading1");
+            let heading2 = document.getElementById("Heading2");
+            let randomwords = document.getElementById("randomwords");
+            heading.style.display = "none"; // Hide the heading when the button is clicked
+            randomwords.style.display = "none";
+            button.style.display = "none"; // Hide the button after it's clicked
+            vid.style.display = "block"; // Show the video element
+            vid.muted = false; // Unmute the video
+            vid.play(); // Play the video
+            vid.style.width = "100%"; // Set the width to 100% of the parent element
+            vid.style.height = "auto"; // Set the height to auto to maintain aspect ratio
+            heading2.style.display = "block";
+            
+            console.log("RICKROLL: COMPLETE")
+            console.log("🤙🤙🤙🤙🤙🤙🤙🤙🤙") // Console log for fun
+            showPopup(); // Call the function to show the animated popup
+        }
+    </script>
+</body> 
+</html>
+
