@@ -3,24 +3,32 @@
     <title>My Stupid Website</title>
     <style>
         @keyframes blinker {
-  50% { opacity: 0; }
-}
+          50% { opacity: 0; }
+        }
 
-.blinking-text {
-  animation: blinker 1s linear infinite;
-}
+        .blinking-text {
+          animation: blinker 1s linear infinite;
+        }
     </style>
 <body style="background-color: black; color: red; text-align: center; font-family: Arial, sans-serif;">
+    
     <h1 id="Heading1" style="font-size: 50px; color: green;">Welcome to my Website!!</h1>
-    <img src='ReCaptcha_icon.svg' alt='logo' width='300' height='300'>
+    
+    <img id="logo" src='ReCaptcha_icon.svg' alt='logo' width='300' height='300'>
+    
     <p id="randomwords" style="font-size: 20px; color: green;">We need to verify that you are a human. Please click the button below to continue.</p>
+    
     <h1 id="Heading2" class="blinking-text" style="font-size: 50px; color: green; display: none;">YOU'VE BEEN RICKROLLED HAHAHAHAHAHAHA</h1>
-    <button id="myButton" style="color: red; background-color: white; border-style: solid; border-color: red; font-size: 25px" onclick="main()">Click Here To Verify</button><br>
+    
+    <button id="myButton" style="color: green; background-color: grey; border-style: solid; border-color: green; font-size: 25px" onclick="main()">Click Here To Verify</button><br>
+    
     <video id="myVideo">
         <source src="rickroll3.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
     </video>
+    
     <br>
+    
     <script>
         function speak (phrase) {
   window.speechSynthesis.speak(new window.SpeechSynthesisUtterance(phrase));
@@ -37,9 +45,9 @@
             popup.style.position = "absolute";
             popup.style.width = "300px";
             popup.style.height = "300px";
-            popup.style.backgroundColor = "black"; // Set the background color to white
-            popup.style.color = "red";
-            popup.style.border = "2px solid red";
+            popup.style.backgroundColor = "black"; // Set the background color to black
+            popup.style.color = "green";
+            popup.style.border = "2px solid green";
             popup.style.textAlign = "center";
             popup.style.lineHeight = "100px";
             popup.style.fontSize = "20px";
@@ -71,24 +79,29 @@
             movePopup();
         }
         function main() {
-            speak1();
-            doTheDirtyStuff();
+            speak1(); // speak a message that you have been rickrolled
+            doTheDirtyStuff(); // start the rickrolling
         }
         function doTheDirtyStuff() {
+            // define the different elements
             let vid = document.getElementById("myVideo");
-            let button = document.getElementById("myButton"); // Get the button element
+            let button = document.getElementById("myButton");
             let heading = document.getElementById("Heading1");
             let heading2 = document.getElementById("Heading2");
             let randomwords = document.getElementById("randomwords");
+            let logo = document.getElementById("logo");
+            // hide various elements
             heading.style.display = "none"; // Hide the heading when the button is clicked
-            randomwords.style.display = "none";
+            logo.style.display = "none"; // Hide the logo image
+            randomwords.style.display = "none"; // Hide the random words
             button.style.display = "none"; // Hide the button after it's clicked
+            // show the rickroll elements
             vid.style.display = "block"; // Show the video element
             vid.muted = false; // Unmute the video
             vid.play(); // Play the video
             vid.style.width = "100%"; // Set the width to 100% of the parent element
             vid.style.height = "auto"; // Set the height to auto to maintain aspect ratio
-            heading2.style.display = "block";
+            heading2.style.display = "block"; // show the rickroll heading
             
             console.log("RICKROLL: COMPLETE")
             console.log("🤙🤙🤙🤙🤙🤙🤙🤙🤙") // Console log for fun
