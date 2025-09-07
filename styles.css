@@ -1,0 +1,170 @@
+:root {
+    --blue1: #2449d1;
+    --blue2: #0785fa;
+    --black: #000000;
+    --white: #ffffff;
+    --grey: #3b3d45;
+    --red1: #ff0000;
+    --yellow1: #ffff00;
+    --green1: #32a852;
+}
+
+body {
+    text-align: center;
+    background-color: var(--black);
+    
+    color :var(--blue2);
+    font-family: "Jersey 10", sans-serif, "Courier New", Courier, monospace;
+    font-size: larger;
+} 
+
+h1 {
+    font-family: "Bungee", sans-serif, "Arial Black", sans-serif;
+    color: var(--black);
+    font-size: xx-large;
+    text-shadow: 0 0 5px var(--blue2);
+}
+/* HEADER */
+
+/* Style the header with a blue background and some padding */
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: var(--blue2);
+  padding: 20px 10px;
+  border-bottom: var(--blue1) 4px solid;
+}
+
+/* Style the header links */
+.header a {
+  float: left;
+  font-family: "Bungee", sans-serif, "Arial Black", sans-serif;
+  color: var(--black);
+  text-shadow: 0 0 5px var(--blue1);
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.homelogo {
+  float: left;
+  font-family: "Bungee", sans-serif, "Arial Black", sans-serif;
+  color: var(--black);
+  text-shadow: 0 0 5px var(--blue2);
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  font-size: 25px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.homelogo {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* Float the link section to the right */
+.header-right {
+  float: right;
+}
+
+/* END HEADER */
+#welcome {
+    margin-top: 440px;
+    margin-bottom: 100px;
+}
+/* STYLE BUTTONS */
+button {
+    background-color: var(--blue2);
+    border: none;
+    color: var(--black);
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Bungee', sans-serif, "Arial Black", sans-serif;
+    text-shadow: 0 0 5px var(--blue1);
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    border: var(--blue1) 4px solid;
+}
+button:hover {
+    background-color: var(--blue1);
+    color: var(--black);
+    border: var(--blue2) 4px solid;
+}
+/* GRID CONTAINER FOR PROJECTS */
+.grid-container-projects {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 10px;
+    background-color: var(--black);
+    padding: 10px;
+}
+.grid-container-projects > div {
+  background-color: var(--grey);
+  color: var(-blue2);
+  padding: 10px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 10px;
+}
+/* HOMEPAGE PROJECTS SECTION*/
+#projects {
+    margin-top: 200px;
+    margin-bottom: 300px;
+}
+#projects div {
+    cursor: pointer;
+}
+#projects h2 {
+    font-family: "Bungee", sans-serif, sans-serif, "Arial Black", sans-serif;
+    color: var(--black);
+    font-size: x-large;
+    text-shadow: 0 0 5px var(--blue2);
+    margin-bottom: 20px;
+}
+#projects h3 {
+    font-family: 'Jersey 10', sans-serif, "Courier New", Courier, monospace;
+    color: var(--blue2);
+    font-size: x-large;
+}
+#projects img {
+    margin-top: 17px;
+    height: 200px;
+    width: auto;
+    border-radius: 10px;
+    border: var(--black) 4px solid;
+}
+#projects p {
+    font-family: 'Jersey 10', sans-serif, "Courier New", Courier, monospace;
+    color: var(--black);
+    font-size: 25px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+/* SELECTION COLOR */
+::-moz-selection { /* Code for Firefox */
+  color: var(--red1);
+  background: var(--yellow1);
+  text-shadow: none;
+}
+
+::selection {
+  color: var(--red1);
+  background: var(--yellow1);
+  text-shadow: none;
+}
+
