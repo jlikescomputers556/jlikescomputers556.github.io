@@ -10,9 +10,11 @@
 }
 
 body {
+    margin:0;
+    padding:0;
+    height:100%;
     text-align: center;
     background-color: var(--black);
-    
     color :var(--blue2);
     font-family: "Jersey 10", sans-serif, "Courier New", Courier, monospace;
     font-size: larger;
@@ -77,10 +79,7 @@ h1 {
 }
 
 /* END HEADER */
-#welcome {
-    margin-top: 440px;
-    margin-bottom: 100px;
-}
+
 /* STYLE BUTTONS */
 button {
     background-color: var(--blue2);
@@ -112,6 +111,7 @@ button:hover {
     background-color: var(--black);
     padding: 10px;
 }
+
 .grid-container-projects > div {
   background-color: var(--grey);
   color: var(-blue2);
@@ -120,39 +120,104 @@ button:hover {
   text-align: center;
   border-radius: 10px;
 }
+
+/* HOMEPAGE WELCOME SECTION */
+#welcome {
+    margin-top: 440px;
+    margin-bottom: 100px;
+}
+
 /* HOMEPAGE PROJECTS SECTION*/
 #projects {
     margin-top: 200px;
     margin-bottom: 300px;
 }
-#projects div {
+#projects-homepage div {
     cursor: pointer;
 }
-#projects h2 {
+#projects-homepage h2 {
     font-family: "Bungee", sans-serif, sans-serif, "Arial Black", sans-serif;
     color: var(--black);
     font-size: x-large;
     text-shadow: 0 0 5px var(--blue2);
     margin-bottom: 20px;
 }
-#projects h3 {
+#projects-homepage h3 {
     font-family: 'Jersey 10', sans-serif, "Courier New", Courier, monospace;
     color: var(--blue2);
     font-size: x-large;
 }
-#projects img {
+#projects-homepage img {
     margin-top: 17px;
     height: 200px;
     width: auto;
     border-radius: 10px;
     border: var(--black) 4px solid;
 }
-#projects p {
+#projects-homepage p {
     font-family: 'Jersey 10', sans-serif, "Courier New", Courier, monospace;
     color: var(--black);
     font-size: 25px;
     margin-top: 0px;
     margin-bottom: 20px;
+}
+
+/* HOMPAGE BLOG SECTION */
+#blog {
+    margin-top: 200px;
+    margin-bottom: 300px;
+}
+#blog-homepage div {
+    cursor: pointer;
+}
+#blog-homepage h2 {
+    font-family: "Bungee", sans-serif, sans-serif, "Arial Black", sans-serif;
+    color: var(--black);
+    font-size: x-large;
+    text-shadow: 0 0 5px var(--blue2);
+    margin-bottom: 20px;
+}
+#blog-homepage h3 {
+    font-family: 'Jersey 10', sans-serif, "Courier New", Courier, monospace;
+    color: var(--blue2);
+    font-size: x-large;
+}
+#blog-homepage img {
+    margin-top: 17px;
+    height: 200px;
+    width: auto;
+    border-radius: 10px;
+    border: var(--black) 4px solid;
+}
+#blog-homepage p {
+    font-family: 'Jersey 10', sans-serif, "Courier New", Courier, monospace;
+    color: var(--black);
+    font-size: 25px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+/* About Me Page */
+#about-me {
+    margin-top: 200px;
+    margin-bottom: auto;
+}
+#about-me p {
+    font-family: 'Jersey 10', sans-serif, "Courier New", Courier, monospace;
+    color: var(--blue2);
+    font-size: 25px;
+    margin-top: 25px;
+}
+/* Project Detail Pages */
+#project-detail {
+    margin-top: 300px;
+    margin-bottom: auto;
+}
+#project-detail p {
+    font-family: 'Jersey 10', sans-serif, "Courier New", Courier, monospace;
+    color: var(--blue2);
+    font-size: 25px;
+    margin-top: 25px;
 }
 
 /* SELECTION COLOR */
@@ -167,4 +232,7 @@ button:hover {
   background: var(--yellow1);
   text-shadow: none;
 }
+
+
+
 
