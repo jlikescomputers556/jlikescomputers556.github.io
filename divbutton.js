@@ -42,3 +42,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+            const myDivButton = document.getElementById('DivButtonB1');
+            myDivButton.addEventListener('click', function() {
+                window.location.href = "placeholder.html";
+            });
+            myDivButton.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    window.location.href = "placeholder.html";
+                }
+            });
+        });
+document.addEventListener('DOMContentLoaded', function() {
+            const myDivButton = document.getElementById('DivButtonB2');
+            myDivButton.addEventListener('click', function() {
+                window.location.href = 'placeholder.html';
+            });
+            myDivButton.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    window.location.href = 'placeholder.html';
+                }
+            });
+        });
+document.addEventListener('DOMContentLoaded', function() {
+            const myDivButton = document.getElementById('DivButtonB3');
+            myDivButton.addEventListener('click', function() {
+                window.location.href = 'placeholder.html';
+            });
+            myDivButton.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    window.location.href = 'placeholder.html';
+                }
+            });
+        });
+document.addEventListener('DOMContentLoaded', function() {
+            const myDivButton = document.getElementById('DivButtonB4');
+            myDivButton.addEventListener('click', function() {
+                window.location.href = 'placeholder.html';
+            });
+            myDivButton.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    window.location.href = 'placeholder.html';
+                }
+            });
+        });
