@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
             const myDivButton = document.getElementById('DivButtonP2');
             myDivButton.addEventListener('click', function() {
-                window.location.href = 'placeholder.html';
+                window.location.href = 'dockerpiPR.html';
             });
             myDivButton.addEventListener('keypress', function(event) {
                 if (event.key === 'Enter' || event.key === ' ') {
-                    window.location.href = 'placeholder.html';
+                    window.location.href = 'dockerpiPR.html';
                 }
             });
         });
