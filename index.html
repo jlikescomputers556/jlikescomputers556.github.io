@@ -5,86 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jack's Lab - Home</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
-    <script src="divbutton.js" defer></script>
+    <!-- Monospaced font for terminal feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-       <div class="header">
-        <a class="homelogo" href="index.html">Jack's Lab</a>
-        <div class="header-right">
+        <h1><a href="index.html" class="logo">Jack's Lab</a></h1>
+        <nav>
             <a href="index.html">Home</a>
             <a href="placeholder.html">Projects</a>
             <a href="placeholder.html">Blog</a>
             <a href="about.html">About</a>
-        </div>
-        </div>
+        </nav>
     </header>
+
     <main>
         <section id="welcome">
-        <h1>Welcome to Jack's Lab</h1>
-        <h2>An archive of my projects and a blog for all things tech!</h2><br>
-        <button onclick="location.href='about.html'">About Me</button>
+            <h2>Welcome to Jack's Lab</h2>
+            <p>An archive of my projects and a blog for all things tech.</p>
+            <p><a href="about.html">About Me →</a></p>
         </section>
-        <br><br><br><br><br><br><br>
-        <section id="projects-homepage">
-            <h2>Check Out My Projects</h2>
-            <h3>From web development to cybersecurity, explore my diverse range of projects.</h3>
-            <div class ="grid-container-projects">
-                <div id="DivButtonP1" role="button" tabindex="0" aria-pressed="false">
-                    <img src="youGotRickd.gif" alt="Rickroll - Project 1" class="project-image">
-                    <h3>Rickroll Website Build</h3>
-                    <p>Rick your friends with this simple page!</p>
-                </div>
-                <div id="DivButtonP2" role="button" tabindex="0" aria-pressed="false">
-                    <img src="docker-mark-blue.png" alt="Docker and Portainer - Project 2" class="project-image">
-                    <h3>Docker and Portainer on a Pi 4</h3>
-                    <p>Get some containers up and running on a Pi! </p>
-                </div>
-                <div id="DivButtonP3" role="button" tabindex="0" aria-pressed="false">
-                    <img src="labFlask.png" alt="Project 3" class="project-image">
-                    <h3>Project 1</h3>
-                    <p>A brief description of Project 1.</p>
-                </div>
-                <div id="DivButtonP4" role="button" tabindex="0" aria-pressed="false">
-                    <img src="labFlask.png" alt="Project 4" class="project-image">
-                    <h3>Project 1</h3>
-                    <p>A brief description of Project 1.</p>
-                </div>
-            </div>
+
+        <section id="projects">
+            <h2>Projects</h2>
+            <ul>
+                <li><a href="#">Rickroll Website Build</a> – Rick your friends with this simple page!</li>
+                <li><a href="#">Docker and Portainer on a Pi 4</a> – Get containers running on a Pi!</li>
+                <li><a href="#">Project 3</a> – A brief description of Project 3.</li>
+                <li><a href="#">Project 4</a> – A brief description of Project 4.</li>
+            </ul>
         </section>
-        <br><br><br><br><br><br><br>
-        <section id="blog-homepage">
-            <h2>Check Out My Latest Blog Posts</h2>
-            <h3>Stay updated with my thoughts on web development, cybersecurity, and more.</h3>
-            <div class ="grid-container-projects">
-                <div id="DivButtonB1" role="button" tabindex="0" aria-pressed="false">
-                    <img src="labFlask.png" alt="Project 1" class="project-image">
-                    <h3>Project 1</h3>
-                    <p>A brief description of Project 1.</p>
-                </div>
-                <div id="DivButtonB2" role="button" tabindex="0" aria-pressed="false">
-                    <img src="labFlask.png" alt="Project 2" class="project-image">
-                    <h3>Project 1</h3>
-                    <p>A brief description of Project 1.</p>
-                </div>
-                <div id="DivButtonB3" role="button" tabindex="0" aria-pressed="false">
-                    <img src="labFlask.png" alt="Project 3" class="project-image">
-                    <h3>Project 1</h3>
-                    <p>A brief description of Project 1.</p>
-                </div>
-                <div id="DivButtonB4" role="button" tabindex="0" aria-pressed="false">
-                    <img src="labFlask.png" alt="Project 4" class="project-image">
-                    <h3>Project 1</h3>
-                    <p>A brief description of Project 1.</p>
-                </div>
-            </div>
+
+        <section id="blog">
+            <h2>Latest Blog Posts</h2>
+            <ul>
+                <li><a href="#">Post 1</a> – A brief description of post 1.</li>
+                <li><a href="#">Post 2</a> – A brief description of post 2.</li>
+                <li><a href="#">Post 3</a> – A brief description of post 3.</li>
+                <li><a href="#">Post 4</a> – A brief description of post 4.</li>
+            </ul>
         </section>
     </main>
-    <footer>  
+
+    <footer>
+        <p>© 2026 Jack's Lab</p>
     </footer>
 </body>
 </html>
