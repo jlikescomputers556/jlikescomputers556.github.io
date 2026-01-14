@@ -1,21 +1,29 @@
-:root {
-    --blue1: #2449d1;
-    --white1: #E0E0E0;
-    --black: #000000;
-    --white: #ffffff;
-    --grey: #3b3d45;
-    --red1: #ff0000;
-    --yellow1: #ffff00;
-    --green1: #32a852;
-}
 body {
-    margin:0;
-    padding:0;
-    height:100%;
-    text-align: center;
-    background-color: var(--black);
-    color :var(--white1);
+    background-color: #111111;
+    color: #E0E0E0;
     font-family: 'Fira Code', monospace;
-    line-height: 1.5
-} 
+    line-height: 1.5;
+    margin: 2rem;
+}
 
+a {
+    color: #00FFFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header, footer {
+    margin-bottom: 2rem;
+}
+
+h1, h2 {
+    color: #00FF00;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
