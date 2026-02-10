@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology Test 7 — Study Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e10;
+    --surface: #18181c;
+    --border: #2a2a30;
+    --accent: #6ef07c;
+    --accent2: #f0c86e;
+    --accent3: #6eb5f0;
+    --text: #e8e8ee;
+    --muted: #7a7a88;
+    --done-bg: #1a2e1c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  header {
+    max-width: 720px;
+    margin: 0 auto 2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+  }
+
+  .exam-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #0a1a0c;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text);
+  }
+
+  .subtitle {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .progress-bar-wrap {
+    margin-top: 1.2rem;
+    background: var(--border);
+    height: 6px;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+  .progress-label {
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+  }
+  .progress-label span { color: var(--accent); }
+
+  .main {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .time-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    font-size: 0.82rem;
+  }
+
+  .time-block .slot {
+    font-family: 'DM Mono', monospace;
+    color: var(--accent2);
+    font-size: 0.72rem;
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.05em;
+  }
+  .time-block .topic {
+    font-weight: 600;
+    font-size: 0.88rem;
+  }
+  .time-block .mins {
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-top: 0.15rem;
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .section-header:hover { background: rgba(255,255,255,0.02); }
+
+  .section-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    flex: 1;
+  }
+
+  .section-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .chevron {
+    color: var(--muted);
+    transition: transform 0.2s;
+    font-size: 0.8rem;
+  }
+  .section.collapsed .chevron { transform: rotate(-90deg); }
+
+  .items {
+    padding: 0.5rem 1.2rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .section.collapsed .items { display: none; }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.55rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .item:hover { background: rgba(255,255,255,0.03); }
+  .item.done { background: var(--done-bg); }
+
+  .item input[type=checkbox] {
+    appearance: none;
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .item.done input[type=checkbox] {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .item.done input[type=checkbox]::after {
+    content: '✓';
+    position: absolute;
+    top: -1px; left: 1px;
+    font-size: 11px;
+    color: #0a1a0c;
+    font-weight: 700;
+  }
+
+  .item-text {
+    font-size: 0.87rem;
+    line-height: 1.4;
+    color: var(--text);
+    transition: color 0.15s;
+  }
+  .item.done .item-text {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--border);
+  }
+
+  .tip-box {
+    background: rgba(110, 240, 124, 0.06);
+    border: 1px solid rgba(110, 240, 124, 0.2);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #a8e8b0;
+  }
+  .tip-box strong {
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.3rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .section-header .section-dot { transition: background 0.3s; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="exam-badge">📅 Exam Today</div>
+  <h1>Biology Chapter 7<br>Crash Study Plan</h1>
+  <p class="subtitle">16 questions · Taxonomy · Viruses · Bacteria · Protists · Review</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <div class="progress-label"><span id="progressText">0</span> of <span id="totalText">0</span> items checked</div>
+</header>
+
+<div class="main">
+
+  <!-- Time Schedule -->
+  <div>
+    <div style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;">⏱ Suggested Time Blocks</div>
+    <div class="time-grid">
+      <div class="time-block">
+        <div class="slot">Block 1</div>
+        <div class="topic">Taxonomy</div>
+        <div class="mins">~20 min</div>
+      </div>
+      <div class="time-block">
+        <div class="slot">Block 2</div>
+        <div class="topic">Viruses</div>
+        <div class="mins">~30 min</div>
+      </div>
+      <div class="time-block">
+        <div class="slot">Block 3</div>
+        <div class="topic">Bacteria</div>
+        <div class="mins">~25 min</div>
+      </div>
+      <div class="time-block">
+        <div class="slot">Block 4</div>
+        <div class="topic">Protists</div>
+        <div class="mins">~15 min</div>
+      </div>
+      <div class="time-block">
+        <div class="slot">Block 5</div>
+        <div class="topic">Review Qs</div>
+        <div class="mins">~10 min</div>
+      </div>
+      <div class="time-block">
+        <div class="slot">Block 6</div>
+        <div class="topic">Final Pass</div>
+        <div class="mins">~10 min</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taxonomy -->
+  <div class="section" id="s1">
+    <div class="section-header" onclick="toggleSection('s1')">
+      <div class="section-dot" style="background:#f0c86e"></div>
+      <div class="section-title">🌿 Taxonomy</div>
+      <div class="section-count" id="count-s1">0/6</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="items">
+      <label class="item"><input type="checkbox"><span class="item-text">Know Aristotle's contribution to taxonomy (early classification by physical traits)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Know Theophrastus's contribution (classified plants; "Father of Botany")</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Know Linnaeus's contribution (binomial nomenclature, modern classification system)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Memorize the 8-level classification: Domain, Kingdom, Phylum, Class, Order, Family, Genus, Species</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Define a clade and explain how scientists use them (grouping organisms by common ancestry)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Explain what pushback a non-evolutionary creationist would have with clades (they assume common descent)</span></label>
+    </div>
+  </div>
+
+  <!-- Viruses -->
+  <div class="section" id="s2">
+    <div class="section-header" onclick="toggleSection('s2')">
+      <div class="section-dot" style="background:#f07a6e"></div>
+      <div class="section-title">🦠 Viruses</div>
+      <div class="section-count" id="count-s2">0/8</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="items">
+      <label class="item"><input type="checkbox"><span class="item-text">Adolf Meyer — showed tobacco mosaic disease was transferable (1880s)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Dmitry Ivanovsky — showed the agent passed through bacteria-proof filters (1892)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Martinus Beijerinck — coined "contagium vivum fluidum"; argued it was a new type of pathogen (1898)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Wendell Stanley — first crystallized a virus (TMV), showed viruses are not typical cells (1935)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Rosalind Franklin — used X-ray crystallography to reveal the structure of TMV</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Describe virus structure: protein capsid, nucleic acid (DNA or RNA), sometimes an envelope; bacteriophage has head/tail/tail fibers</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Are viruses alive? No — they lack cells, can't reproduce independently, don't maintain homeostasis. But they do have genetic material and evolve.</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Virus life cycle: Attachment → Injection → Replication → Assembly → Release (lytic) or integration into host DNA (lysogenic)</span></label>
+      <!-- bonus -->
+      <label class="item"><input type="checkbox"><span class="item-text">Examples of viral diseases: flu, COVID-19, HIV/AIDS, rabies, chickenpox, Ebola</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">How vaccines work: expose immune system to weakened/dead virus (or antigen) so body builds memory antibodies</span></label>
+    </div>
+  </div>
+
+  <!-- Bacteria -->
+  <div class="section" id="s3">
+    <div class="section-header" onclick="toggleSection('s3')">
+      <div class="section-dot" style="background:#6eb5f0"></div>
+      <div class="section-title">🔬 Bacteria</div>
+      <div class="section-count" id="count-s3">0/6</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="items">
+      <label class="item"><input type="checkbox"><span class="item-text">Bacteria vs Archaea: both prokaryotes, but archaea have different cell membranes, live in extreme environments, and have distinct ribosomal RNA</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Classification by shape: coccus (sphere), bacillus (rod), spirillum (spiral)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Gram stain: Gram-positive (thick peptidoglycan, purple) vs. Gram-negative (thin, pink) — important for antibiotic treatment</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Classification by nutrients: autotrophs (make own food) vs. heterotrophs (consume others)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Benefits of bacteria: decomposition, nitrogen fixation, gut flora, yogurt/cheese, antibiotic production</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Antibiotic discovery (Fleming/penicillin) and resistance: overuse leads to natural selection of resistant strains</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Examples of bacterial diseases: strep throat, tuberculosis, Lyme disease, E. coli infection</span></label>
+    </div>
+  </div>
+
+  <!-- Protists -->
+  <div class="section" id="s4">
+    <div class="section-header" onclick="toggleSection('s4')">
+      <div class="section-dot" style="background:#c46ef0"></div>
+      <div class="section-title">🌊 Protists</div>
+      <div class="section-count" id="count-s4">0/4</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="items">
+      <label class="item"><input type="checkbox"><span class="item-text">Endosymbiotic theory: mitochondria and chloroplasts were once free-living bacteria absorbed by larger cells (evidence: own DNA, double membranes)</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Creationist pushback on endosymbiosis: assumes evolutionary history and common descent, no direct observation</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Protists defined: eukaryotes that are NOT animals, plants, or fungi — mostly unicellular</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">3 types: Animal-like (protozoa, e.g. amoeba), Plant-like (algae), Fungal-like (slime molds)</span></label>
+    </div>
+  </div>
+
+  <!-- Review Questions -->
+  <div class="section" id="s5">
+    <div class="section-header" onclick="toggleSection('s5')">
+      <div class="section-dot" style="background:#6ef0d8"></div>
+      <div class="section-title">📌 Review Questions</div>
+      <div class="section-count" id="count-s5">0/2</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="items">
+      <label class="item"><input type="checkbox"><span class="item-text">Central Dogma of Biology: DNA → (transcription) → mRNA → (translation) → Protein</span></label>
+      <label class="item"><input type="checkbox"><span class="item-text">Scientific facts vs. truth: Facts are empirically verified observations; "truth" is broader and can include philosophical/theological claims beyond science's scope</span></label>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 Last-Minute Tips</strong>
+    With 16 questions across 5 sections, expect ~3 questions per section. Focus hardest on <strong>Viruses</strong> (most detail) and <strong>Taxonomy</strong> (lots of names/dates). Use the checkboxes to track what you've reviewed — aim to finish all sections at least once before your exam!
+  </div>
+
+</div>
+
+<script>
+  function toggleSection(id) {
+    document.getElementById(id).classList.toggle('collapsed');
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.item input[type=checkbox]');
+    const checked = document.querySelectorAll('.item input[type=checkbox]:checked');
+    const pct = all.length ? (checked.length / all.length * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = checked.length;
+    document.getElementById('totalText').textContent = all.length;
+  }
+
+  function updateSectionCounts() {
+    ['s1','s2','s3','s4','s5'].forEach(id => {
+      const section = document.getElementById(id);
+      const all = section.querySelectorAll('.item input[type=checkbox]');
+      const checked = section.querySelectorAll('.item input[type=checkbox]:checked');
+      document.getElementById('count-' + id).textContent = checked.length + '/' + all.length;
+    });
+  }
+
+  document.querySelectorAll('.item input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', function() {
+      this.closest('.item').classList.toggle('done', this.checked);
+      updateProgress();
+      updateSectionCounts();
+    });
+  });
+
+  updateProgress();
+  updateSectionCounts();
+</script>
+</body>
+</html>
