@@ -254,9 +254,25 @@
     <h1 style="font-family: var(--serif); font-size: clamp(48px, 7vw, 72px); font-weight: 300; color: #ede8df; margin-bottom: 16px; line-height: 1.1;">
       Admin <em style="color: var(--amber); font-style: italic;">Panel</em>
     </h1>
-    <p style="font-size: 14px; color: var(--text-dim); margin-bottom: 48px;">
+    <p style="font-size: 14px; color: var(--text-dim); margin-bottom: 24px;">
       Create and manage your content with ease.
     </p>
+
+    <!-- Download Section -->
+    <div style="background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; padding: 24px; margin-bottom: 48px;">
+      <div style="font-size: 13px; color: var(--amber); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Export Your Content</div>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+        <button onclick="downloadPosts()" class="btn btn-primary">
+          📥 Download posts.json (<span id="postCount">0</span> posts)
+        </button>
+        <button onclick="downloadProjects()" class="btn btn-primary">
+          📥 Download projects.json (<span id="projectCount">0</span> projects)
+        </button>
+      </div>
+      <p style="font-size: 12px; color: var(--text-faint); margin-top: 16px; line-height: 1.6;">
+        After creating content below, download these files and upload them to your GitHub repo. Your site will automatically display all your posts and projects!
+      </p>
+    </div>
 
     <!-- Tabs -->
     <div class="admin-tabs">
@@ -309,7 +325,7 @@ your code here
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Generate Blog Post HTML</button>
+          <button type="submit" class="btn btn-primary">Save Blog Post</button>
           <button type="button" class="btn btn-ghost" onclick="document.getElementById('blogForm').reset(); blogTags = []; renderBlogTags();">Clear Form</button>
         </div>
       </form>
@@ -325,23 +341,14 @@ your code here
 
       <!-- Instructions -->
       <div class="preview-section">
-        <div class="preview-title">Instructions</div>
+        <div class="preview-title">How it works</div>
         <ol style="font-size: 13px; color: var(--text-dim); line-height: 1.8; padding-left: 20px;">
-          <li>Fill in the form above</li>
-          <li>Click "Generate Blog Post HTML"</li>
-          <li>Copy the generated HTML code</li>
-          <li>Save it as <code style="background: var(--bg); padding: 2px 6px; border-radius: 2px; color: var(--amber);">blog-post-X.html</code></li>
-          <li>Add an entry to <code style="background: var(--bg); padding: 2px 6px; border-radius: 2px; color: var(--amber);">bloghome.html</code> using the "Add to List" code below</li>
+          <li>Fill in the form above and click "Save Blog Post"</li>
+          <li>Your post is saved in your browser</li>
+          <li>Click "Download posts.json" at the top</li>
+          <li>Upload <code style="background: var(--bg); padding: 2px 6px; border-radius: 2px; color: var(--amber);">posts.json</code> to your GitHub repo</li>
+          <li>Your blog automatically displays all posts! ✨</li>
         </ol>
-      </div>
-
-      <!-- Blog List Entry Output -->
-      <div id="blogListOutput" class="output-section">
-        <div class="output-header">
-          <span class="output-title">Add This to bloghome.html</span>
-          <button class="copy-btn" onclick="copyBlogListCode()">Copy Code</button>
-        </div>
-        <pre class="output-code" id="blogListCode"></pre>
       </div>
     </div>
 
@@ -378,7 +385,7 @@ your code here
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Generate Project Card</button>
+          <button type="submit" class="btn btn-primary">Save Project</button>
           <button type="button" class="btn btn-ghost" onclick="document.getElementById('projectForm').reset(); projectTags = []; renderProjectTags();">Clear Form</button>
         </div>
       </form>
@@ -394,13 +401,13 @@ your code here
 
       <!-- Instructions -->
       <div class="preview-section">
-        <div class="preview-title">Instructions</div>
+        <div class="preview-title">How it works</div>
         <ol style="font-size: 13px; color: var(--text-dim); line-height: 1.8; padding-left: 20px;">
-          <li>Fill in the form above</li>
-          <li>Click "Generate Project Card"</li>
-          <li>Copy the generated HTML code</li>
-          <li>Paste it into <code style="background: var(--bg); padding: 2px 6px; border-radius: 2px; color: var(--amber);">projects.html</code> inside the projects-grid div</li>
-          <li>Optionally add it to the homepage's featured projects</li>
+          <li>Fill in the form above and click "Save Project"</li>
+          <li>Your project is saved in your browser</li>
+          <li>Click "Download projects.json" at the top</li>
+          <li>Upload <code style="background: var(--bg); padding: 2px 6px; border-radius: 2px; color: var(--amber);">projects.json</code> to your GitHub repo</li>
+          <li>Your projects page automatically updates! ✨</li>
         </ol>
       </div>
     </div>
@@ -433,6 +440,10 @@ your code here
       });
     });
 
+    // Load existing data from localStorage
+    let allPosts = JSON.parse(localStorage.getItem('jackslabPosts')) || [];
+    let allProjects = JSON.parse(localStorage.getItem('jackslabProjects')) || [];
+
     // Blog Tags Management
     let blogTags = [];
     const blogTagInput = document.getElementById('blogTagInput');
@@ -457,7 +468,6 @@ your code here
       
       blogTagContainer.innerHTML = pills + '<input type="text" class="add-tag-input" id="blogTagInput" placeholder="Press Enter to add tags..." />';
       
-      // Re-attach event listener
       const newInput = document.getElementById('blogTagInput');
       newInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -501,7 +511,6 @@ your code here
       
       projectTagContainer.innerHTML = pills + '<input type="text" class="add-tag-input" id="projectTagInput" placeholder="Press Enter to add tags..." />';
       
-      // Re-attach event listener
       const newInput = document.getElementById('projectTagInput');
       newInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -530,11 +539,10 @@ your code here
       const number = document.getElementById('blogNumber').value;
       const content = document.getElementById('blogContent').value;
       
-      // Format date for display
       const dateObj = new Date(date + '-01');
       const displayDate = dateObj.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
       
-      // Convert markdown-style content to HTML (basic conversion)
+      // Convert markdown-style content to HTML
       let htmlContent = content
         .replace(/^# (.+)$/gm, '<h1 style="font-family: var(--serif); font-size: 48px; font-weight: 300; color: #ede8df; margin: 32px 0 16px;">$1</h1>')
         .replace(/^## (.+)$/gm, '<h2 style="font-family: var(--serif); font-size: 32px; font-weight: 300; color: #ede8df; margin: 24px 0 12px;">$1</h2>')
@@ -549,99 +557,47 @@ your code here
           if (para.startsWith('<h') || para.startsWith('<pre') || para.startsWith('<li')) {
             return para;
           }
-          if (para.startsWith('<li')) {
-            return '<ul style="padding-left: 24px; margin: 16px 0;">' + para + '</ul>';
+          if (para.includes('<li')) {
+            return para;
           }
           return '<p style="margin: 16px 0; line-height: 1.8;">' + para + '</p>';
         })
         .join('\n');
       
-      // Wrap consecutive li elements in ul
       htmlContent = htmlContent.replace(/(<li.*?<\/li>\s*)+/g, '<ul style="padding-left: 24px; margin: 16px 0;">$&</ul>');
       
       const filename = 'blog-post-' + number + '.html';
       
-      const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title} - Jack's Lab</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
-</head>
-<body>
-
-  <!-- ── Nav ── -->
-  <nav>
-    <a href="index.html" class="nav-logo">jack's lab</a>
-    <ul class="nav-links">
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="bloghome.html">Blog</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- ── Blog Post ── -->
-  <article style="max-width: 800px; margin: 0 auto; padding: 140px 48px 80px;">
-    <!-- Back Link -->
-    <a href="bloghome.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-dim); text-decoration: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; transition: color 0.2s;">
-      <span style="font-size: 16px;">←</span> Back to Blog
-    </a>
-
-    <!-- Post Meta -->
-    <div style="margin-bottom: 24px;">
-      <span style="font-size: 11px; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase;">${displayDate}</span>
-    </div>
-
-    <!-- Post Title -->
-    <h1 style="font-family: var(--serif); font-size: clamp(40px, 6vw, 64px); font-weight: 300; color: #ede8df; margin-bottom: 32px; line-height: 1.2;">
-      ${title}
-    </h1>
-
-    <!-- Tags -->
-    <div style="margin-bottom: 48px; display: flex; gap: 8px; flex-wrap: wrap;">
-      ${blogTags.map(tag => `<span style="padding: 4px 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-dim); border: 1px solid var(--amber-dim); border-radius: 1px;">${tag}</span>`).join('\n      ')}
-    </div>
-
-    <!-- Content -->
-    <div style="font-size: 15px; line-height: 1.8; color: var(--text);">
-      ${htmlContent}
-    </div>
-
-    <!-- Back Link Bottom -->
-    <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border);">
-      <a href="bloghome.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-dim); text-decoration: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;">
-        <span style="font-size: 16px;">←</span> Back to Blog
-      </a>
-    </div>
-  </article>
-
-  <!-- ── Footer ── -->
-  <footer>
-    <span>© 2026 Jack's Lab</span>
-    <span>Built with intention.</span>
-  </footer>
-
-</body>
-</html>`;
-
-      // Generate blog list entry
-      const listEntry = `        <!-- Blog Post ${number} -->
-        <a href="${filename}" class="blog-item" data-tags="${blogTags.join(',')}" data-date="${date}">
-          <div class="blog-num">${number}</div>
-          <div class="blog-title">${title}</div>
-          <div class="blog-meta">${displayDate}</div>
-        </a>`;
-
-      document.getElementById('blogCode').textContent = html;
-      document.getElementById('blogOutput').classList.add('show');
+      const post = {
+        number: number,
+        title: title,
+        date: date,
+        displayDate: displayDate,
+        tags: blogTags,
+        content: content,
+        htmlContent: htmlContent,
+        filename: filename
+      };
       
-      document.getElementById('blogListCode').textContent = listEntry;
-      document.getElementById('blogListOutput').classList.add('show');
+      // Add to posts array
+      allPosts.push(post);
+      
+      // Save to localStorage
+      localStorage.setItem('jackslabPosts', JSON.stringify(allPosts));
+      
+      alert(`✅ Blog post saved! You now have ${allPosts.length} post(s).
+      
+Next steps:
+1. Click "Download posts.json" below
+2. Upload it to your GitHub repo
+3. Your blog will automatically update!`);
+      
+      // Reset form
+      document.getElementById('blogForm').reset();
+      blogTags = [];
+      renderBlogTags();
+      
+      updateDownloadButtons();
     });
 
     // Project Form Submission
@@ -653,42 +609,65 @@ your code here
       const link = document.getElementById('projectLink').value || '#';
       const desc = document.getElementById('projectDesc').value;
       
-      const html = `        <!-- Project ${number} -->
-        <a href="${link}" class="project-card" data-tags="${projectTags.join(',')}">
-          <div class="project-num">${number}</div>
-          <div class="project-title">${title}</div>
-          <p class="project-desc">${desc}</p>
-          <div>
-            ${projectTags.map(tag => `<span class="project-tag">${tag}</span>`).join('\n            ')}
-          </div>
-          <div class="project-arrow">↗</div>
-        </a>`;
+      const project = {
+        number: number,
+        title: title,
+        link: link,
+        description: desc,
+        tags: projectTags
+      };
+      
+      // Add to projects array
+      allProjects.push(project);
+      
+      // Save to localStorage
+      localStorage.setItem('jackslabProjects', JSON.stringify(allProjects));
+      
+      alert(`✅ Project saved! You now have ${allProjects.length} project(s).
 
-      document.getElementById('projectCode').textContent = html;
-      document.getElementById('projectOutput').classList.add('show');
+Next steps:
+1. Click "Download projects.json" below
+2. Upload it to your GitHub repo
+3. Your projects page will automatically update!`);
+      
+      // Reset form
+      document.getElementById('projectForm').reset();
+      projectTags = [];
+      renderProjectTags();
+      
+      updateDownloadButtons();
     });
 
-    // Copy functions
-    function copyBlogCode() {
-      const code = document.getElementById('blogCode').textContent;
-      navigator.clipboard.writeText(code).then(() => {
-        alert('Blog post HTML copied to clipboard!');
-      });
+    // Download JSON functions
+    function downloadPosts() {
+      const dataStr = JSON.stringify(allPosts, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+      const exportFileDefaultName = 'posts.json';
+      
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', exportFileDefaultName);
+      linkElement.click();
     }
 
-    function copyBlogListCode() {
-      const code = document.getElementById('blogListCode').textContent;
-      navigator.clipboard.writeText(code).then(() => {
-        alert('Blog list entry copied to clipboard!');
-      });
+    function downloadProjects() {
+      const dataStr = JSON.stringify(allProjects, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+      const exportFileDefaultName = 'projects.json';
+      
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', exportFileDefaultName);
+      linkElement.click();
     }
 
-    function copyProjectCode() {
-      const code = document.getElementById('projectCode').textContent;
-      navigator.clipboard.writeText(code).then(() => {
-        alert('Project card HTML copied to clipboard!');
-      });
+    function updateDownloadButtons() {
+      document.getElementById('postCount').textContent = allPosts.length;
+      document.getElementById('projectCount').textContent = allProjects.length;
     }
+
+    // Initialize download button counts
+    updateDownloadButtons();
   </script>
 
 </body>
