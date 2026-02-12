@@ -139,12 +139,49 @@
   <script>
     const searchInput = document.getElementById('searchInput');
     const tagFilters = document.querySelectorAll('.tag-filter');
-    const blogItems = document.querySelectorAll('.blog-item');
+    let blogItems = document.querySelectorAll('.blog-item');
     const resultsCount = document.getElementById('resultNumber');
     const noResults = document.getElementById('noResults');
     const blogContainer = document.getElementById('blogContainer');
 
     let activeTag = 'all';
+
+    // Load blog posts from JSON
+    async function loadPosts() {
+      try {
+        const response = await fetch('posts.json');
+        const posts = await response.json();
+        
+        // Sort posts by date (newest first)
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        // Add JSON posts to the list
+        posts.forEach(post => {
+          const item = document.createElement('a');
+          item.href = post.filename;
+          item.className = 'blog-item';
+          item.setAttribute('data-tags', post.tags.join(','));
+          item.setAttribute('data-date', post.date);
+          
+          item.innerHTML = `
+            <div class="blog-num">${post.number}</div>
+            <div class="blog-title">${post.title}</div>
+            <div class="blog-meta">${post.displayDate}</div>
+          `;
+          
+          blogContainer.appendChild(item);
+        });
+        
+        // Re-query blog items after adding new ones
+        blogItems = document.querySelectorAll('.blog-item');
+        updateResultsCount();
+      } catch (error) {
+        console.log('No posts.json found or error loading - showing only hardcoded posts');
+      }
+    }
+
+    // Load posts on page load
+    loadPosts();
 
     // Search functionality
     searchInput.addEventListener('input', filterPosts);
@@ -200,6 +237,10 @@
         blogContainer.style.display = 'flex';
         noResults.style.display = 'none';
       }
+    }
+
+    function updateResultsCount() {
+      resultsCount.textContent = blogItems.length;
     }
 
     // Hover effects for tag filters
