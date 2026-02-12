@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel - Jack's Lab</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+  <style>
+    .admin-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 48px 80px;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .admin-tab {
+      padding: 12px 24px;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+
+    .admin-tab.active {
+      color: var(--amber);
+      border-bottom-color: var(--amber);
+    }
+
+    .admin-tab:hover {
+      color: var(--amber);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      transition: border 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--amber);
+    }
+
+    .form-textarea {
+      min-height: 200px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-textarea.content {
+      min-height: 400px;
+      font-size: 14px;
+    }
+
+    .tag-input-container {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 8px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      min-height: 48px;
+    }
+
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: var(--amber-dim);
+      color: var(--text);
+      border-radius: 2px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    .tag-remove {
+      cursor: pointer;
+      color: var(--text-dim);
+      font-weight: bold;
+    }
+
+    .tag-remove:hover {
+      color: var(--amber);
+    }
+
+    .add-tag-input {
+      flex: 1;
+      min-width: 120px;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .output-section {
+      margin-top: 48px;
+      padding: 24px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: none;
+    }
+
+    .output-section.show {
+      display: block;
+    }
+
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .output-title {
+      font-size: 13px;
+      color: var(--amber);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .copy-btn {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .output-code {
+      background: var(--bg);
+      padding: 16px;
+      border-radius: 2px;
+      overflow-x: auto;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .preview-section {
+      margin-top: 32px;
+      padding: 24px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+
+    .preview-title {
+      font-size: 13px;
+      color: var(--amber);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a href="index.html" class="nav-logo">jack's lab</a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="bloghome.html">Blog</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Admin Panel ── -->
+  <div class="admin-container">
+    <h1 style="font-family: var(--serif); font-size: clamp(48px, 7vw, 72px); font-weight: 300; color: #ede8df; margin-bottom: 16px; line-height: 1.1;">
+      Admin <em style="color: var(--amber); font-style: italic;">Panel</em>
+    </h1>
+    <p style="font-size: 14px; color: var(--text-dim); margin-bottom: 48px;">
+      Create and manage your content with ease.
+    </p>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="blog">New Blog Post</button>
+      <button class="admin-tab" data-tab="project">New Project</button>
+    </div>
+
+    <!-- Blog Post Form -->
+    <div id="blogTab" class="tab-content active">
+      <form id="blogForm">
+        <div class="two-col">
+          <div class="form-group">
+            <label class="form-label">Post Title</label>
+            <input type="text" class="form-input" id="blogTitle" placeholder="My Awesome Blog Post" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Date (YYYY-MM)</label>
+            <input type="text" class="form-input" id="blogDate" placeholder="2026-02" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Post Number</label>
+          <input type="text" class="form-input" id="blogNumber" placeholder="06" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tags</label>
+          <div class="tag-input-container" id="blogTagContainer">
+            <input type="text" class="add-tag-input" id="blogTagInput" placeholder="Press Enter to add tags..." />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Content (Markdown supported)</label>
+          <textarea class="form-textarea content" id="blogContent" placeholder="Write your blog post here...
+
+# Heading
+## Subheading
+- Bullet point
+- Another point
+
+**Bold text** and *italic text*
+
+Code blocks:
+```
+your code here
+```" required></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Generate Blog Post HTML</button>
+          <button type="button" class="btn btn-ghost" onclick="document.getElementById('blogForm').reset(); blogTags = []; renderBlogTags();">Clear Form</button>
+        </div>
+      </form>
+
+      <!-- Output -->
+      <div id="blogOutput" class="output-section">
+        <div class="output-header">
+          <span class="output-title">Generated HTML</span>
+          <button class="copy-btn" onclick="copyBlogCode()">Copy Code</button>
+        </div>
+        <pre class="output-code" id="blogCode"></pre>
+      </div>
+
+      <!-- Instructions -->
+      <div class="preview-section">
+        <div class="preview-title">Instructions</div>
+        <ol style="font-size: 13px; color: var(--text-dim); line-height: 1.8; padding-left: 20px;">
+          <li>Fill in the form above</li>
+          <li>Click "Generate Blog Post HTML"</li>
+          <li>Copy the generated HTML code</li>
+          <li>Save it as <code style="background: var(--bg); padding: 2px 6px; border-radius: 2px; color: var(--amber);">blog-post-X.html</code></li>
+          <li>Add an entry to <code style="background: var(--bg); padding: 2px 6px; border-radius: 2px; color: var(--amber);">bloghome.html</code> using the "Add to List" code below</li>
+        </ol>
+      </div>
+
+      <!-- Blog List Entry Output -->
+      <div id="blogListOutput" class="output-section">
+        <div class="output-header">
+          <span class="output-title">Add This to bloghome.html</span>
+          <button class="copy-btn" onclick="copyBlogListCode()">Copy Code</button>
+        </div>
+        <pre class="output-code" id="blogListCode"></pre>
+      </div>
+    </div>
+
+    <!-- Project Form -->
+    <div id="projectTab" class="tab-content">
+      <form id="projectForm">
+        <div class="two-col">
+          <div class="form-group">
+            <label class="form-label">Project Number</label>
+            <input type="text" class="form-input" id="projectNumber" placeholder="005" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Project Title</label>
+            <input type="text" class="form-input" id="projectTitle" placeholder="My Cool Project" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Project Link (optional)</label>
+          <input type="text" class="form-input" id="projectLink" placeholder="project-page.html or #" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="projectDesc" placeholder="A brief description of what this project is about and what you learned..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tags</label>
+          <div class="tag-input-container" id="projectTagContainer">
+            <input type="text" class="add-tag-input" id="projectTagInput" placeholder="Press Enter to add tags..." />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Generate Project Card</button>
+          <button type="button" class="btn btn-ghost" onclick="document.getElementById('projectForm').reset(); projectTags = []; renderProjectTags();">Clear Form</button>
+        </div>
+      </form>
+
+      <!-- Output -->
+      <div id="projectOutput" class="output-section">
+        <div class="output-header">
+          <span class="output-title">Generated HTML</span>
+          <button class="copy-btn" onclick="copyProjectCode()">Copy Code</button>
+        </div>
+        <pre class="output-code" id="projectCode"></pre>
+      </div>
+
+      <!-- Instructions -->
+      <div class="preview-section">
+        <div class="preview-title">Instructions</div>
+        <ol style="font-size: 13px; color: var(--text-dim); line-height: 1.8; padding-left: 20px;">
+          <li>Fill in the form above</li>
+          <li>Click "Generate Project Card"</li>
+          <li>Copy the generated HTML code</li>
+          <li>Paste it into <code style="background: var(--bg); padding: 2px 6px; border-radius: 2px; color: var(--amber);">projects.html</code> inside the projects-grid div</li>
+          <li>Optionally add it to the homepage's featured projects</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <span>© 2026 Jack's Lab</span>
+    <span>Built with intention.</span>
+  </footer>
+
+  <!-- ── JavaScript ── -->
+  <script>
+    // Tab switching
+    const tabs = document.querySelectorAll('.admin-tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.getAttribute('data-tab');
+        
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        tabContents.forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        document.getElementById(targetTab + 'Tab').classList.add('active');
+      });
+    });
+
+    // Blog Tags Management
+    let blogTags = [];
+    const blogTagInput = document.getElementById('blogTagInput');
+    const blogTagContainer = document.getElementById('blogTagContainer');
+
+    blogTagInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const tag = blogTagInput.value.trim();
+        if (tag && !blogTags.includes(tag)) {
+          blogTags.push(tag);
+          blogTagInput.value = '';
+          renderBlogTags();
+        }
+      }
+    });
+
+    function renderBlogTags() {
+      const pills = blogTags.map(tag => 
+        `<span class="tag-pill">${tag}<span class="tag-remove" onclick="removeBlogTag('${tag}')">×</span></span>`
+      ).join('');
+      
+      blogTagContainer.innerHTML = pills + '<input type="text" class="add-tag-input" id="blogTagInput" placeholder="Press Enter to add tags..." />';
+      
+      // Re-attach event listener
+      const newInput = document.getElementById('blogTagInput');
+      newInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const tag = newInput.value.trim();
+          if (tag && !blogTags.includes(tag)) {
+            blogTags.push(tag);
+            newInput.value = '';
+            renderBlogTags();
+          }
+        }
+      });
+    }
+
+    function removeBlogTag(tag) {
+      blogTags = blogTags.filter(t => t !== tag);
+      renderBlogTags();
+    }
+
+    // Project Tags Management
+    let projectTags = [];
+    const projectTagInput = document.getElementById('projectTagInput');
+    const projectTagContainer = document.getElementById('projectTagContainer');
+
+    projectTagInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const tag = projectTagInput.value.trim();
+        if (tag && !projectTags.includes(tag)) {
+          projectTags.push(tag);
+          projectTagInput.value = '';
+          renderProjectTags();
+        }
+      }
+    });
+
+    function renderProjectTags() {
+      const pills = projectTags.map(tag => 
+        `<span class="tag-pill">${tag}<span class="tag-remove" onclick="removeProjectTag('${tag}')">×</span></span>`
+      ).join('');
+      
+      projectTagContainer.innerHTML = pills + '<input type="text" class="add-tag-input" id="projectTagInput" placeholder="Press Enter to add tags..." />';
+      
+      // Re-attach event listener
+      const newInput = document.getElementById('projectTagInput');
+      newInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const tag = newInput.value.trim();
+          if (tag && !projectTags.includes(tag)) {
+            projectTags.push(tag);
+            newInput.value = '';
+            renderProjectTags();
+          }
+        }
+      });
+    }
+
+    function removeProjectTag(tag) {
+      projectTags = projectTags.filter(t => t !== tag);
+      renderProjectTags();
+    }
+
+    // Blog Form Submission
+    document.getElementById('blogForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('blogTitle').value;
+      const date = document.getElementById('blogDate').value;
+      const number = document.getElementById('blogNumber').value;
+      const content = document.getElementById('blogContent').value;
+      
+      // Format date for display
+      const dateObj = new Date(date + '-01');
+      const displayDate = dateObj.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      
+      // Convert markdown-style content to HTML (basic conversion)
+      let htmlContent = content
+        .replace(/^# (.+)$/gm, '<h1 style="font-family: var(--serif); font-size: 48px; font-weight: 300; color: #ede8df; margin: 32px 0 16px;">$1</h1>')
+        .replace(/^## (.+)$/gm, '<h2 style="font-family: var(--serif); font-size: 32px; font-weight: 300; color: #ede8df; margin: 24px 0 12px;">$1</h2>')
+        .replace(/^### (.+)$/gm, '<h3 style="font-family: var(--mono); font-size: 18px; color: var(--amber); margin: 20px 0 8px; letter-spacing: 0.05em;">$1</h3>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong style="color: var(--amber);">$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em style="color: var(--text);">$1</em>')
+        .replace(/^- (.+)$/gm, '<li style="margin: 8px 0;">$1</li>')
+        .replace(/```([\s\S]*?)```/g, '<pre style="background: var(--bg); padding: 16px; border-radius: 2px; overflow-x: auto; margin: 16px 0; border: 1px solid var(--border);"><code style="font-family: var(--mono); font-size: 13px; color: var(--text);">$1</code></pre>')
+        .replace(/`(.+?)`/g, '<code style="background: var(--bg2); padding: 2px 6px; border-radius: 2px; color: var(--amber); font-family: var(--mono); font-size: 12px;">$1</code>')
+        .split('\n\n')
+        .map(para => {
+          if (para.startsWith('<h') || para.startsWith('<pre') || para.startsWith('<li')) {
+            return para;
+          }
+          if (para.startsWith('<li')) {
+            return '<ul style="padding-left: 24px; margin: 16px 0;">' + para + '</ul>';
+          }
+          return '<p style="margin: 16px 0; line-height: 1.8;">' + para + '</p>';
+        })
+        .join('\n');
+      
+      // Wrap consecutive li elements in ul
+      htmlContent = htmlContent.replace(/(<li.*?<\/li>\s*)+/g, '<ul style="padding-left: 24px; margin: 16px 0;">$&</ul>');
+      
+      const filename = 'blog-post-' + number + '.html';
+      
+      const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${title} - Jack's Lab</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a href="index.html" class="nav-logo">jack's lab</a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="bloghome.html">Blog</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Blog Post ── -->
+  <article style="max-width: 800px; margin: 0 auto; padding: 140px 48px 80px;">
+    <!-- Back Link -->
+    <a href="bloghome.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-dim); text-decoration: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; transition: color 0.2s;">
+      <span style="font-size: 16px;">←</span> Back to Blog
+    </a>
+
+    <!-- Post Meta -->
+    <div style="margin-bottom: 24px;">
+      <span style="font-size: 11px; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase;">${displayDate}</span>
+    </div>
+
+    <!-- Post Title -->
+    <h1 style="font-family: var(--serif); font-size: clamp(40px, 6vw, 64px); font-weight: 300; color: #ede8df; margin-bottom: 32px; line-height: 1.2;">
+      ${title}
+    </h1>
+
+    <!-- Tags -->
+    <div style="margin-bottom: 48px; display: flex; gap: 8px; flex-wrap: wrap;">
+      ${blogTags.map(tag => `<span style="padding: 4px 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-dim); border: 1px solid var(--amber-dim); border-radius: 1px;">${tag}</span>`).join('\n      ')}
+    </div>
+
+    <!-- Content -->
+    <div style="font-size: 15px; line-height: 1.8; color: var(--text);">
+      ${htmlContent}
+    </div>
+
+    <!-- Back Link Bottom -->
+    <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border);">
+      <a href="bloghome.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-dim); text-decoration: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;">
+        <span style="font-size: 16px;">←</span> Back to Blog
+      </a>
+    </div>
+  </article>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <span>© 2026 Jack's Lab</span>
+    <span>Built with intention.</span>
+  </footer>
+
+</body>
+</html>`;
+
+      // Generate blog list entry
+      const listEntry = `        <!-- Blog Post ${number} -->
+        <a href="${filename}" class="blog-item" data-tags="${blogTags.join(',')}" data-date="${date}">
+          <div class="blog-num">${number}</div>
+          <div class="blog-title">${title}</div>
+          <div class="blog-meta">${displayDate}</div>
+        </a>`;
+
+      document.getElementById('blogCode').textContent = html;
+      document.getElementById('blogOutput').classList.add('show');
+      
+      document.getElementById('blogListCode').textContent = listEntry;
+      document.getElementById('blogListOutput').classList.add('show');
+    });
+
+    // Project Form Submission
+    document.getElementById('projectForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const number = document.getElementById('projectNumber').value;
+      const title = document.getElementById('projectTitle').value;
+      const link = document.getElementById('projectLink').value || '#';
+      const desc = document.getElementById('projectDesc').value;
+      
+      const html = `        <!-- Project ${number} -->
+        <a href="${link}" class="project-card" data-tags="${projectTags.join(',')}">
+          <div class="project-num">${number}</div>
+          <div class="project-title">${title}</div>
+          <p class="project-desc">${desc}</p>
+          <div>
+            ${projectTags.map(tag => `<span class="project-tag">${tag}</span>`).join('\n            ')}
+          </div>
+          <div class="project-arrow">↗</div>
+        </a>`;
+
+      document.getElementById('projectCode').textContent = html;
+      document.getElementById('projectOutput').classList.add('show');
+    });
+
+    // Copy functions
+    function copyBlogCode() {
+      const code = document.getElementById('blogCode').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('Blog post HTML copied to clipboard!');
+      });
+    }
+
+    function copyBlogListCode() {
+      const code = document.getElementById('blogListCode').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('Blog list entry copied to clipboard!');
+      });
+    }
+
+    function copyProjectCode() {
+      const code = document.getElementById('projectCode').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('Project card HTML copied to clipboard!');
+      });
+    }
+  </script>
+
+</body>
+</html>
