@@ -1,41 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jack's Lab - Blog</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Monospaced font for terminal feel -->
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog - Jack's Lab</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <h1>Jack's Lab</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="projects.html">Projects</a>
-            <a href="bloghome.html">Blog</a>
-            <a href="about.html">About</a>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>All Blog Articles</h2>
-                <a href="blog-post-1.html">Post Title 1</a>
-                <p>– A short description of what Post 1 is about.</p>
-                <a href="blog-post-2.html">Post Title 2</a>
-                <p>– A short description of what Post 2 covers.</p>
-                <a href="blog-post-3.html">Post Title 3</a>
-                <p>– A short description of what Post 3 covers.</p>
-                <a href="blog-post-4.html">Post Title 4</a>
-                <p>– A short description of what Post 4 is about.</p>
-                <a href="blog-post-5.html">Post Title 5</a>
-                <p>– A short description of what Post 5 covers.</p>
-                <!-- Add more posts as needed -->
-        </section>
-    </main>
-    <footer>
-        <p>© 2026 Jack's Lab</p>
-    </footer>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a href="index.html" class="nav-logo">jack's lab</a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="bloghome.html">Blog</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Blog Header ── -->
+  <section style="padding: 140px 48px 60px; background: var(--bg);">
+    <div style="max-width: 1400px; margin: 0 auto;">
+      <h1 style="font-family: var(--serif); font-size: clamp(48px, 7vw, 86px); font-weight: 300; color: #ede8df; margin-bottom: 16px; line-height: 1.1;">
+        <em style="color: var(--amber); font-style: italic;">Blog</em> & Notes
+      </h1>
+      <p style="font-size: 14px; color: var(--text-dim); margin-bottom: 48px;">
+        Thoughts, tutorials, and things I've learned along the way.
+      </p>
+
+      <!-- Search & Filter Controls -->
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px;">
+        <!-- Search Bar -->
+        <div style="flex: 1; min-width: 280px;">
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Search blog posts..."
+            style="width: 100%; padding: 12px 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; color: var(--text); font-family: var(--mono); font-size: 13px; transition: border 0.2s;"
+            onfocus="this.style.borderColor='var(--amber)'" 
+            onblur="this.style.borderColor='var(--border)'"
+          />
+        </div>
+
+        <!-- Tag Filter Buttons -->
+        <div id="tagFilters" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <span style="font-size: 11px; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase;">Filter:</span>
+          <button class="tag-filter active" data-tag="all" style="padding: 8px 16px; background: var(--amber); color: #0d0d0f; border: none; border-radius: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; font-weight: 500;">
+            All
+          </button>
+          <button class="tag-filter" data-tag="Tutorial" style="padding: 8px 16px; background: transparent; color: var(--text-dim); border: 1px solid var(--border); border-radius: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;">
+            Tutorial
+          </button>
+          <button class="tag-filter" data-tag="Networking" style="padding: 8px 16px; background: transparent; color: var(--text-dim); border: 1px solid var(--border); border-radius: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;">
+            Networking
+          </button>
+          <button class="tag-filter" data-tag="Linux" style="padding: 8px 16px; background: transparent; color: var(--text-dim); border: 1px solid var(--border); border-radius: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;">
+            Linux
+          </button>
+          <button class="tag-filter" data-tag="Homelab" style="padding: 8px 16px; background: transparent; color: var(--text-dim); border: 1px solid var(--border); border-radius: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;">
+            Homelab
+          </button>
+          <button class="tag-filter" data-tag="Thoughts" style="padding: 8px 16px; background: transparent; color: var(--text-dim); border: 1px solid var(--border); border-radius: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;">
+            Thoughts
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Counter -->
+      <p id="resultsCount" style="font-size: 12px; color: var(--text-faint); letter-spacing: 0.05em;">
+        Showing <span id="resultNumber">5</span> posts
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Blog List ── -->
+  <section style="padding: 0 48px 80px; background: var(--bg);">
+    <div style="max-width: 1400px; margin: 0 auto;">
+      <div id="blogContainer" class="blog-list">
+
+        <!-- Blog Post 1 -->
+        <a href="blog-post-1.html" class="blog-item" data-tags="Tutorial,Linux" data-date="2026-01">
+          <div class="blog-num">01</div>
+          <div class="blog-title">Post Title 1</div>
+          <div class="blog-meta">Jan 2026</div>
+        </a>
+
+        <!-- Blog Post 2 -->
+        <a href="blog-post-2.html" class="blog-item" data-tags="Networking,Homelab" data-date="2026-01">
+          <div class="blog-num">02</div>
+          <div class="blog-title">Post Title 2</div>
+          <div class="blog-meta">Jan 2026</div>
+        </a>
+
+        <!-- Blog Post 3 -->
+        <a href="blog-post-3.html" class="blog-item" data-tags="Tutorial,Linux" data-date="2025-12">
+          <div class="blog-num">03</div>
+          <div class="blog-title">Post Title 3</div>
+          <div class="blog-meta">Dec 2025</div>
+        </a>
+
+        <!-- Blog Post 4 -->
+        <a href="blog-post-4.html" class="blog-item" data-tags="Thoughts" data-date="2025-12">
+          <div class="blog-num">04</div>
+          <div class="blog-title">Post Title 4</div>
+          <div class="blog-meta">Dec 2025</div>
+        </a>
+
+        <!-- Blog Post 5 -->
+        <a href="blog-post-5.html" class="blog-item" data-tags="Tutorial,Homelab" data-date="2025-11">
+          <div class="blog-num">05</div>
+          <div class="blog-title">Post Title 5</div>
+          <div class="blog-meta">Nov 2025</div>
+        </a>
+
+        <!-- Add more posts here with data-tags attribute -->
+
+      </div>
+
+      <!-- No Results Message -->
+      <div id="noResults" style="display: none; text-align: center; padding: 80px 20px;">
+        <p style="font-family: var(--serif); font-size: 24px; color: var(--text-dim); margin-bottom: 8px;">No posts found</p>
+        <p style="font-size: 13px; color: var(--text-faint);">Try adjusting your search or filters</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <span>© 2026 Jack's Lab</span>
+    <span>Built with intention.</span>
+  </footer>
+
+  <!-- ── JavaScript for Search & Filter ── -->
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const tagFilters = document.querySelectorAll('.tag-filter');
+    const blogItems = document.querySelectorAll('.blog-item');
+    const resultsCount = document.getElementById('resultNumber');
+    const noResults = document.getElementById('noResults');
+    const blogContainer = document.getElementById('blogContainer');
+
+    let activeTag = 'all';
+
+    // Search functionality
+    searchInput.addEventListener('input', filterPosts);
+
+    // Tag filter functionality
+    tagFilters.forEach(button => {
+      button.addEventListener('click', function() {
+        // Update active state
+        tagFilters.forEach(btn => {
+          btn.classList.remove('active');
+          btn.style.background = 'transparent';
+          btn.style.color = 'var(--text-dim)';
+          btn.style.border = '1px solid var(--border)';
+        });
+        
+        this.classList.add('active');
+        this.style.background = 'var(--amber)';
+        this.style.color = '#0d0d0f';
+        this.style.border = 'none';
+        
+        activeTag = this.getAttribute('data-tag');
+        filterPosts();
+      });
+    });
+
+    function filterPosts() {
+      const searchTerm = searchInput.value.toLowerCase();
+      let visibleCount = 0;
+
+      blogItems.forEach(item => {
+        const title = item.querySelector('.blog-title').textContent.toLowerCase();
+        const tags = item.getAttribute('data-tags').toLowerCase();
+
+        const matchesSearch = title.includes(searchTerm) || tags.includes(searchTerm);
+        const matchesTag = activeTag === 'all' || tags.includes(activeTag.toLowerCase());
+
+        if (matchesSearch && matchesTag) {
+          item.style.display = 'grid';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Update results count
+      resultsCount.textContent = visibleCount;
+
+      // Show/hide no results message
+      if (visibleCount === 0) {
+        blogContainer.style.display = 'none';
+        noResults.style.display = 'block';
+      } else {
+        blogContainer.style.display = 'flex';
+        noResults.style.display = 'none';
+      }
+    }
+
+    // Hover effects for tag filters
+    tagFilters.forEach(button => {
+      button.addEventListener('mouseenter', function() {
+        if (!this.classList.contains('active')) {
+          this.style.borderColor = 'var(--amber)';
+          this.style.color = 'var(--amber)';
+        }
+      });
+      
+      button.addEventListener('mouseleave', function() {
+        if (!this.classList.contains('active')) {
+          this.style.borderColor = 'var(--border)';
+          this.style.color = 'var(--text-dim)';
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
