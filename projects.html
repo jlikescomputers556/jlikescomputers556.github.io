@@ -157,12 +157,49 @@
   <script>
     const searchInput = document.getElementById('searchInput');
     const tagFilters = document.querySelectorAll('.tag-filter');
-    const projectCards = document.querySelectorAll('.project-card');
+    let projectCards = document.querySelectorAll('.project-card');
     const resultsCount = document.getElementById('resultNumber');
     const noResults = document.getElementById('noResults');
     const projectsContainer = document.getElementById('projectsContainer');
 
     let activeTag = 'all';
+
+    // Load projects from JSON
+    async function loadProjects() {
+      try {
+        const response = await fetch('projects.json');
+        const projects = await response.json();
+        
+        // Add JSON projects to the grid
+        projects.forEach(project => {
+          const card = document.createElement('a');
+          card.href = project.link;
+          card.className = 'project-card';
+          card.setAttribute('data-tags', project.tags.join(','));
+          
+          card.innerHTML = `
+            <div class="project-num">${project.number}</div>
+            <div class="project-title">${project.title}</div>
+            <p class="project-desc">${project.description}</p>
+            <div>
+              ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('\n              ')}
+            </div>
+            <div class="project-arrow">↗</div>
+          `;
+          
+          projectsContainer.appendChild(card);
+        });
+        
+        // Re-query project cards after adding new ones
+        projectCards = document.querySelectorAll('.project-card');
+        updateResultsCount();
+      } catch (error) {
+        console.log('No projects.json found or error loading - showing only hardcoded projects');
+      }
+    }
+
+    // Load projects on page load
+    loadProjects();
 
     // Search functionality
     searchInput.addEventListener('input', filterProjects);
@@ -219,6 +256,10 @@
         projectsContainer.style.display = 'grid';
         noResults.style.display = 'none';
       }
+    }
+
+    function updateResultsCount() {
+      resultsCount.textContent = projectCards.length;
     }
 
     // Hover effects for tag filters
