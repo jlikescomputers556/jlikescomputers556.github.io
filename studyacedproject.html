@@ -1,8 +1,81 @@
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-     <h1>Not done yet! Check in later!</h1>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACED — Week 1: FROM IDEA TO LIVE PRODUCT - Jack's Lab</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a href="index.html" class="nav-logo">jack's lab</a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="bloghome.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Blog Post ── -->
+  <article style="max-width: 800px; margin: 0 auto; padding: 140px 48px 80px;">
+    <!-- Back Link -->
+    <a href="bloghome.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-dim); text-decoration: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; transition: color 0.2s;">
+      <span style="font-size: 16px;">←</span> Back to Blog
+    </a>
+
+    <!-- Post Meta -->
+    <div style="margin-bottom: 24px;">
+      <span style="font-size: 11px; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase;">Feb 2026</span>
+    </div>
+
+    <!-- Post Title -->
+    <h1 style="font-family: var(--serif); font-size: clamp(40px, 6vw, 64px); font-weight: 300; color: #ede8df; margin-bottom: 32px; line-height: 1.2;">
+      ACED — Week 1: FROM IDEA TO LIVE PRODUCT
+    </h1>
+
+    <!-- Tags -->
+    <div style="margin-bottom: 48px; display: flex; gap: 8px; flex-wrap: wrap;">
+      <span style="padding: 4px 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-dim); border: 1px solid var(--amber-dim); border-radius: 1px;">Startup</span>
+      <span style="padding: 4px 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-dim); border: 1px solid var(--amber-dim); border-radius: 1px;">SaaS</span>
+      <span style="padding: 4px 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-dim); border: 1px solid var(--amber-dim); border-radius: 1px;">Web Dev</span>
+    </div>
+
+    <!-- Content -->
+    <div style="font-size: 15px; line-height: 1.8; color: var(--text);">
+      <h2 style="font-family: var(--serif); font-size: 32px; font-weight: 300; color: #ede8df; margin: 24px 0 12px;">February 10-17, 2026</h2>
+      
+      <p style="margin: 16px 0; line-height: 1.8;">How I turned a last-minute biology test into a SaaS idea in 1 week.</p>
+      
+      <p style="margin: 16px 0; line-height: 1.8;"><strong style="color: var(--amber);">Day 1:</strong> Had a biology exam later that day. Used Claude to generate an interactive study plan from my study guide — it worked so well I realized this could be a real product.</p>
+      
+      <p style="margin: 16px 0; line-height: 1.8;"><strong style="color: var(--amber);">Days 2-5:</strong> Named it <strong style="color: var(--amber);">Aced</strong>. Designed and coded a full landing page with dark mode, custom fonts, and coffee shop aesthetic. Bought studyaced.com and deployed on Netlify.</p>
+      
+      <p style="margin: 16px 0; line-height: 1.8;"><strong style="color: var(--amber);">Day 6-7:</strong> Evening: Set up Tally waitlist form, sent link to friends, got first 11 signups overnight.</p>
+      
+      <p style="margin: 16px 0; line-height: 1.8;"><strong style="color: var(--amber);">Tech:</strong> HTML/CSS/JS, Google Fonts, Netlify, custom domain configuration</p>
+      
+      <p style="margin: 16px 0; line-height: 1.8;"><strong style="color: var(--amber);">Lesson learned:</strong> Ship fast. Most people never get past the idea phase — I went from concept to live website in one day.</p>
+    </div>
+
+    <!-- Back Link Bottom -->
+    <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border);">
+      <a href="bloghome.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-dim); text-decoration: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;">
+        <span style="font-size: 16px;">←</span> Back to Blog
+      </a>
+    </div>
+  </article>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <span>© 2026 Jack's Lab</span>
+    <span>Built with intention.</span>
+  </footer>
+
+</body>
 </html>
